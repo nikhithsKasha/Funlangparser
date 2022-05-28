@@ -1,0 +1,65 @@
+
+%%
+
+program : stmnt
+          | stmnt program
+          ;
+
+stmnt : assign
+        | expr
+        | print
+        ;
+
+assign : REF ASSIGN expr
+         ;
+
+expr : term
+       | expr PLUS term
+       | expr MINUS term
+       ;
+
+term : factor
+       | term TIMES factor
+       | term DIVIDE factor
+       ;
+
+factor : exponent
+         | factor EXPONENT factor
+         ;
+
+exponent : LPAREN expr RPAREN
+           | REF
+           | INTEGER
+           | FLOAT
+           ;
+
+print : PRINT argList
+        ;
+
+argList: arg
+         | argList COMMA arg
+         ;
+
+arg : expr
+      | STRING
+      ;
+%%
+
+    private FunLangParser lexer;
+
+    public FunLangParser()
+    {
+        lexer = new FunLangParser(System.in);
+        lexer.next();
+    }
+
+
+    public void yyerror(String msg) {
+        System.out.printf("Parse error line: %d column: %d %s", lexer.lineNumber(), lexer.columnNumber(), msg);
+    }
+
+
+    public static void main(String [] args) {
+       FunLangParser parser = new FunLangParser();
+        parser.parse();
+    }

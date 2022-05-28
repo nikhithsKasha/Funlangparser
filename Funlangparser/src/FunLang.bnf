@@ -1,0 +1,126 @@
+BNF Grammar
+===========
+< program >     ::= < var-declist > < fun-declist > < block >
+                    | < fun-declist > < block >
+                    | < block >
+
+< fun-declist > ::= < fun >
+                    | < fun-declist > < fun >
+
+< fun >         ::= < fun-type > < id > "(" < param-list > ")" < block >
+                    | < fun-type > < id > "(" ")" < block >
+
+< fun-type >    ::= "PROC"
+                    | < type >
+
+< param-list >  ::= < param-decl >
+                    | < param-decl > "," < param-list >
+
+< param-decl >  ::= < type > < id >
+                    | < type > "[]" < id >
+
+< block >       ::= "BEGIN" < var-declist > < stmnt-list > "END"
+                    | "BEGIN" < stmnt-list > "END"
+
+< var-declist > ::= < var-decl >
+                    | < var-decl > < var-declist >
+
+< var-decl >    ::= < type > < id >
+                    | < type > < id > "[" < bounds > "]"
+
+< bounds >     ::=  < integer >
+                    | < bounds > "," < integer >
+
+< type >        ::= "NUMBER"
+                    | "CHARACTER"
+
+< stmnt-list >  ::= < stmnt >
+                    | < stmnt > < stmnt-list >
+
+< stmnt >       ::= < assign >
+                    | < swap >
+                    | < branch >
+                    | < loop >
+                    | < expr >
+                    | < print >
+                    | < read >
+
+< assign >      ::= < ref > ":=" < expr >
+
+< swap >        ::= < ref > ":=:" < ref >
+
+< branch >      ::= "IF" < condition > < block >
+                    | "IF" < condition > < block > "ELSE" < block >
+
+< loop >        ::= "WHILE" < condition > < block >
+
+< condition >   ::= < expr > "=" < expr >
+                    | < expr > "~=" < expr>
+                    | < expr > "<" < expr >
+                    | < expr > "<=" < expr >
+                    | < expr > ">" < expr >
+                    | < expr > ">=" < expr >
+
+< expr >        ::= < term >
+                    | < expr > "+" < term >
+                    | < expr > "-" < term >
+
+< term >        ::= < factor >
+                    | < term > "*" < factor >
+                    | < term > "/" < factor >
+
+< factor >      ::= < exponent >
+                    | < factor > "**" < factor >
+
+< exponent >    ::= "(" < expr > ")"
+                    | < ref >
+                    | < literal >
+                    | < call >
+
+< print >       ::= "PRINT" < arg-list >
+
+< arg-list >    ::= < expr >
+                    | < expr > "," < arg-list >
+
+< read >        ::= "READ" < ref-list >
+
+< ref-list >    ::= < ref >
+                    | < ref > "," < ref-list >
+
+< ref >         ::= < id >
+                    | < id > "[" < arg-list > "]"
+
+< literal >     ::= < integer >
+                    | < float >
+                    | < char-lit >
+                    | < string >
+
+< call >        ::= < id > "(" < arg-list > ")"
+                    | < id > "(" ")"
+
+< integer >     ::= < digit >
+                    | < integer > < digit >
+
+< float >       ::= < integer > "." < integer >
+
+< char-lit>     ::= "'" < character > "'"
+
+< string >      ::= "\"" < characters > "\""
+
+< characters>   ::= < character >
+                    | < characters > < character >
+
+< id >          ::= < letter >
+                    | "_"
+                    | < id > < digit >
+                    | < id > < letter >
+
+
+
+Informally Stated (not in BNF)
+==============================
+< digit > Any digit 0-9
+< character > Any character, with normal escapes \n, \t, \', \"
+< letter> Any upper or lower case letter
+
+Comments begin with "#" and extend to the end of a line

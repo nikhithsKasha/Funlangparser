@@ -1,0 +1,25 @@
+# This computes the roots of a quadratic polynomial
+# The coeffecients of that polynomial are specified below
+
+
+#lexer will skip comments
+
+  # compute the discriminant
+  disc := b**2 - 4 * a * c
+
+  # compute the root of the discriminant
+  root := disc**0.5
+
+  # compute the denominator
+  denom := 2 * a
+
+  # compute the roots
+  # note that there is no syntactic way to directly specify 
+  # a unary negative, hence (0-b)
+  x1 := ((0-b) + root) / (2*a)
+  x2 := ((0-b) - root) / (2*a)
+
+  PRINT "First root:", x1
+  PRINT "Second root:",x2
+  PRINT "Col1\t\"Col2\"\n"
+  y : 10

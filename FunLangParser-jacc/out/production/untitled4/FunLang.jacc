@@ -1,0 +1,19 @@
+
+    private FunLangParser lexer;
+
+    public FunLangParser()
+    {
+        lexer = new FunLangParser(System.in);
+        lexer.next();
+    }
+
+
+    public void yyerror(String msg) {
+        System.out.printf("Parse error line: %d column: %d %s", lexer.lineNumber(), lexer.columnNumber(), msg);
+    }
+
+
+    public static void main(String [] args) {
+       FunLangParser parser = new FunLangParser();
+        parser.parse();
+    }
